@@ -16,6 +16,7 @@ import React, {
   useState,
   type FC,
   useEffect,
+  useLayoutEffect,
 } from 'react';
 
 const { height } = Dimensions.get('window');
@@ -25,9 +26,11 @@ export interface FlatListProps<ItemT> extends FlatlistPropsNativeScroll<ItemT> {
   indicatorColor?: string;
   indicatorWidth?: number;
   indicatorborder?: number;
+  ref?: React.RefObject<FlatlistNativeScroll<any>>
+  
 }
-
-const FlatList: FC<FlatListProps<any>> = (props) => {
+// @ts-ignore
+const FlatList: FC<FlatListProps<any>> = React.forwardRef((props,ref) => {
   const scroll = useRef<FlatlistNativeScroll>(null);
   const scrolAnimation = useRef<Animated.Value>(new Animated.Value(1)).current;
   const [ScrolledSize, setScrolledSize] = useState<number>(1);
@@ -53,25 +56,41 @@ const FlatList: FC<FlatListProps<any>> = (props) => {
         event.nativeEvent.velocity,
         event.nativeEvent.contentSize.height
       );
+      props.onScroll &&props?.onScroll(event);
     },
     [animation]
   );
 
   useEffect(() => {
+    // console.log("animation", props.ref.current)
+    // props.ref = scroll
     const t = setTimeout(() => {
+      if(ref)
+      // @ts-ignore
+      ref.current?.scrollToOffset({ offset: 1 });
+      else
       scroll.current?.scrollToOffset({ offset: 1 });
+
     }, 10);
     return () => clearTimeout(t);
   }, []);
+
+  useLayoutEffect(() => {
+    // console.log("scrolling", scroll.current)
+    // if(props.ref){
+      // @ts-ignore
+      // props.ref = scroll
+    // }
+  }, [scroll.current])
 
   const indicator = height / (ScrolledSize / height);
   return (
     <View style={styles.container}>
       <FlatlistNativeScroll
         {...props}
-        ref={scroll}
+        ref={ref || scroll}
         onScroll={_Scrolled}
-        onLayout={(e) => console.log(e.nativeEvent.layout)}
+        // onLayout={(e) => console.log(e.nativeEvent.layout)}
         scrollEventThrottle={70}
         showsVerticalScrollIndicator={false}
       >
@@ -88,7 +107,7 @@ const FlatList: FC<FlatListProps<any>> = (props) => {
       />
     </View>
   );
-};
+});
 
 export default FlatList;
 

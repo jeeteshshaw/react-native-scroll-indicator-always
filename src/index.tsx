@@ -19,8 +19,8 @@ const ScrollIndicatorAlways = NativeModules.ScrollIndicatorAlways
       }
     );
 
-export function multiply(a: number, b: number): Promise<number> {
-  return ScrollIndicatorAlways.multiply(a, b);
-}
+// export function multiply(a: number, b: number): Promise<number> {
+//   return ScrollIndicatorAlways.multiply(a, b);
+// }
 
 export { ScrollView, FlatList, type ScrollViewProps, type FlatListProps };
