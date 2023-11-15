@@ -20,7 +20,7 @@ import React, {
 
 const { height } = Dimensions.get('window');
 
-interface FlatListProps<ItemT> extends FlatlistPropsNativeScroll<ItemT> {
+export interface FlatListProps<ItemT> extends FlatlistPropsNativeScroll<ItemT> {
   showAlways?: boolean;
   indicatorColor?: string;
   indicatorWidth?: number;

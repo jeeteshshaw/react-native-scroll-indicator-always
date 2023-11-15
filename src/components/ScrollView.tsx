@@ -20,7 +20,7 @@ import React, {
 
 const { height } = Dimensions.get('window');
 
-interface ScrollViewProps extends NativeScrollProps {
+export interface ScrollViewProps extends NativeScrollProps {
   showAlways?: boolean;
   indicatorColor?: string;
   indicatorWidth?: number;
