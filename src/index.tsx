@@ -1,4 +1,6 @@
 import { NativeModules, Platform } from 'react-native';
+import ScrollView from './components/ScrollView';
+import FlatList from './components/FlatList';
 
 const LINKING_ERROR =
   `The package 'react-native-scroll-indicator-always' doesn't seem to be linked. Make sure: \n\n` +
@@ -20,3 +22,5 @@ const ScrollIndicatorAlways = NativeModules.ScrollIndicatorAlways
 export function multiply(a: number, b: number): Promise<number> {
   return ScrollIndicatorAlways.multiply(a, b);
 }
+
+export { ScrollView, FlatList };

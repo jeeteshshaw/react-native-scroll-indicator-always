@@ -1,7 +1,7 @@
 import * as React from 'react';
 
 import { StyleSheet, View, Text } from 'react-native';
-import { multiply } from 'react-native-scroll-indicator-always';
+import { ScrollView, multiply } from 'react-native-scroll-indicator-always';
 
 export default function App() {
   const [result, setResult] = React.useState<number | undefined>();
@@ -11,9 +11,21 @@ export default function App() {
   }, []);
 
   return (
-    <View style={styles.container}>
-      <Text>Result: {result}</Text>
-    </View>
+    <ScrollView>
+      <View style={styles.container}>
+        <Text>Result: {result}</Text>
+        <View
+          style={{ width: '100%', height: 400, backgroundColor: 'tomato' }}
+        />
+        <View style={{ width: '100%', height: 400, backgroundColor: 'blue' }} />
+        <View
+          style={{ width: '100%', height: 400, backgroundColor: 'green' }}
+        />
+        <View
+          style={{ width: '100%', height: 400, backgroundColor: 'yellow' }}
+        />
+      </View>
+    </ScrollView>
   );
 }
 
