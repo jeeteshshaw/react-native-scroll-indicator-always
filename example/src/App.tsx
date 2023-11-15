@@ -1,18 +1,16 @@
 import * as React from 'react';
 
-import { StyleSheet, View, Text, FlatList as NativeFlatlist, type NativeScrollEvent, ScrollView as NativeScroll, type ScrollViewProps } from 'react-native';
+import { StyleSheet, View, Text, FlatList as NativeFlatlist } from 'react-native';
 import { FlatList, ScrollView } from 'react-native-scroll-indicator-always';
 
 export default function App() {
   const [result, setResult] = React.useState<number | undefined>();
-  const scr = React.useRef<NativeScroll>(null)
+  const scr = React.useRef<NativeFlatlist<any>>(null)
   React.useEffect(() => {
     // multiply(3, 7).then(setResult);
     setTimeout(() => {
       
-      // scr.current && scr.current?.scrollTo({ offset: 1000 });
-      scr.current?.scrollTo({ y: 1000 });
-
+      scr.current?.scrollToOffset({ offset: 1000 });
       console.log("scr1",scr.current)
     }, 1000);
   }, []);
