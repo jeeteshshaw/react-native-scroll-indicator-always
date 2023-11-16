@@ -1,4 +1,3 @@
-Certainly! Here's the README with the requested modification:
 
 ```markdown
 # React Native Scroll Indicator Always
@@ -8,6 +7,14 @@ Certainly! Here's the README with the requested modification:
 A React Native package that provides an always visible scroll indicator for ScrollView and FlatList components, built on top of [react-native-keyboard-aware-scroll-view](https://github.com/APSL/react-native-keyboard-aware-scroll-view).
 
 ## Installation
+
+Make sure you have [react-native-keyboard-aware-scroll-view](https://github.com/APSL/react-native-keyboard-aware-scroll-view) installed. If not, you can install it using:
+
+```bash
+npm install react-native-keyboard-aware-scroll-view
+```
+
+Now, install the scroll indicator package:
 
 ```bash
 npm install react-native-scroll-indicator-always
@@ -140,3 +147,4 @@ const styles = StyleSheet.create({
   },
 });
 ```
+
