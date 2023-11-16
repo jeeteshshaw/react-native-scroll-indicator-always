@@ -9,6 +9,7 @@ import {
   Animated,
   type NativeScrollVelocity,
   type ViewStyle,
+  type LayoutChangeEvent
 } from 'react-native';
 import React, {
   useCallback,
@@ -26,7 +27,8 @@ export interface FlatListProps<ItemT> extends FlatlistPropsNativeScroll<ItemT> {
   indicatorColor?: string;
   indicatorWidth?: number;
   indicatorborder?: number;
-  ref?: React.RefObject<FlatlistNativeScroll<any>>
+  ref?: React.RefObject<FlatlistNativeScroll<any>>;
+  onScroll: (event: NativeSyntheticEvent<NativeScrollEvent>) => void
   
 }
 // @ts-ignore
@@ -34,11 +36,12 @@ const FlatList: FC<FlatListProps<any>> = React.forwardRef((props,ref) => {
   const scroll = useRef<FlatlistNativeScroll>(null);
   const scrolAnimation = useRef<Animated.Value>(new Animated.Value(1)).current;
   const [ScrolledSize, setScrolledSize] = useState<number>(1);
+  const [ScrolledContainerSize, setScrolledContainerSize] = useState<number>(height);
 
   const animation = useCallback(
     (val: number, velocity: NativeScrollVelocity | undefined, ch) => {
       Animated.spring(scrolAnimation, {
-        toValue: height * (val / ch),
+        toValue: ScrolledContainerSize * (val / ch),
         useNativeDriver: true,
         bounciness: 8,
         velocity,
@@ -59,6 +62,13 @@ const FlatList: FC<FlatListProps<any>> = React.forwardRef((props,ref) => {
       props.onScroll &&props?.onScroll(event);
     },
     [animation]
+  );
+  const _ContentHeight = useCallback(
+    (event: LayoutChangeEvent) => {
+      setScrolledContainerSize(event.nativeEvent.layout.height);
+      props.onLayout &&props?.onLayout(event);
+    },
+    []
   );
 
   useEffect(() => {
@@ -83,14 +93,15 @@ const FlatList: FC<FlatListProps<any>> = React.forwardRef((props,ref) => {
     // }
   }, [scroll.current])
 
-  const indicator = height / (ScrolledSize / height);
+  const indicator = ScrolledContainerSize / (ScrolledSize / ScrolledContainerSize);
   return (
     <View style={styles.container}>
       <FlatlistNativeScroll
         {...props}
         ref={ref || scroll}
+        // @ts-ignore
         onScroll={_Scrolled}
-        // onLayout={(e) => console.log(e.nativeEvent.layout)}
+        onLayout={_ContentHeight}
         scrollEventThrottle={70}
         showsVerticalScrollIndicator={false}
       >

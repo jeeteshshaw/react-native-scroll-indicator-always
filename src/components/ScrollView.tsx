@@ -9,6 +9,7 @@ import {
   Animated,
   type NativeScrollVelocity,
   type ViewStyle,
+  type LayoutChangeEvent
 } from 'react-native';
 import React, {
   useCallback,
@@ -26,18 +27,19 @@ export interface ScrollViewProps extends NativeScrollProps {
   indicatorWidth?: number;
   indicatorborder?: number;
   ref?:  React.RefObject<NativeScroll>
-
+  onScroll: (event: NativeSyntheticEvent<NativeScrollEvent>) => void
 }
 // @ts-ignore
 const ScrollView: FC<ScrollViewProps> = React.forwardRef((props,ref) => {
   const scroll = useRef<NativeScroll>(null);
   const scrolAnimation = useRef<Animated.Value>(new Animated.Value(1)).current;
   const [ScrolledSize, setScrolledSize] = useState<number>(1);
+  const [ScrolledContainerSize, setScrolledContainerSize] = useState<number>(height);
 
   const animation = useCallback(
     (val: number, velocity: NativeScrollVelocity | undefined, ch) => {
       Animated.spring(scrolAnimation, {
-        toValue: height * (val / ch),
+        toValue: ScrolledContainerSize * (val / ch),
         useNativeDriver: true,
         bounciness: 8,
         velocity,
@@ -55,10 +57,17 @@ const ScrollView: FC<ScrollViewProps> = React.forwardRef((props,ref) => {
         event.nativeEvent.velocity,
         event.nativeEvent.contentSize.height
       );
-      props.onScroll &&props?.onScroll(event);
+      props.onScroll && props?.onScroll(event);
 
     },
     [animation]
+  );
+  const _ContentHeight = useCallback(
+    (event: LayoutChangeEvent) => {
+      setScrolledContainerSize(event.nativeEvent.layout.height);
+      props.onLayout &&props?.onLayout(event);
+    },
+    []
   );
 
   useEffect(() => {
@@ -72,7 +81,7 @@ const ScrollView: FC<ScrollViewProps> = React.forwardRef((props,ref) => {
     return () => clearTimeout(t);
   }, []);
 
-  const indicator = height / (ScrolledSize / height);
+  const indicator = ScrolledContainerSize / (ScrolledSize / ScrolledContainerSize);
   return (
     <View style={styles.container}>
       <NativeScroll
@@ -80,7 +89,9 @@ const ScrollView: FC<ScrollViewProps> = React.forwardRef((props,ref) => {
         showsVerticalScrollIndicator={false}
         {...props}
         ref={ref || scroll}
+        // @ts-ignore
         onScroll={_Scrolled}
+        onLayout={_ContentHeight}
       
       >
         {props.children}
