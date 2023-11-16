@@ -1,86 +1,135 @@
-Certainly! If you want to simplify the README to focus on the `ScrollView` and `FlatList` components without explicitly mentioning `ScrollIndicatorAlways`, here's a revised version:
+Certainly! Below is an updated README for your React Native Scroll Indicator Always package that includes information about the `FlatList` component:
 
 ---
 
-# React Native Scroll Indicator Always
+# react-native-scroll-indicator-always
 
-[![npm version](https://img.shields.io/npm/v/react-native-scroll-indicator-always.svg)](https://www.npmjs.com/package/react-native-scroll-indicator-always)
-[![License](https://img.shields.io/badge/license-MIT-blue.svg)](https://opensource.org/licenses/MIT)
+[![npm version](https://badge.fury.io/js/react-native-scroll-indicator-always.svg)](https://badge.fury.io/js/react-native-scroll-indicator-always)
 
-Enhance your React Native ScrollView and FlatList components with always-visible scroll indicators.
+A React Native library providing a `ScrollView` and `FlatList` with an always-visible scroll indicator.
 
 ## Installation
+
+Install the package using your preferred package manager:
 
 ```bash
 npm install react-native-scroll-indicator-always
 ```
 
+or
+
+```bash
+yarn add react-native-scroll-indicator-always
+```
+
 ## Usage
 
-```javascript
-import { ScrollView, FlatList, ScrollViewProps, FlatListProps } from 'react-native-scroll-indicator-always';
+Import the components from `react-native-scroll-indicator-always`:
 
-// Your ScrollView and FlatList implementation here
+```jsx
+import { ScrollView, FlatList } from 'react-native-scroll-indicator-always';
 ```
 
-## ScrollViewProps and FlatListProps
+Use `ScrollView` or `FlatList` as you would use the standard React Native components. The scroll indicator will always be visible.
 
-### Properties
+### ScrollView Example
 
-- **showAlways** *(boolean)*: Set to `true` to always show the scroll indicator.
+```jsx
+import * as React from 'react';
+import {
+  StyleSheet,
+  View,
+  Text,
+  ScrollView as NativeScroll,
+} from 'react-native';
+import { ScrollView } from 'react-native-scroll-indicator-always';
 
-- **indicatorColor** *(string)*: Customize the color of the scroll indicator.
+export default function App() {
+  const scr = React.useRef<NativeScroll>(null);
 
-- **indicatorWidth** *(number)*: Adjust the width of the scroll indicator.
+  React.useEffect(() => {
+    setTimeout(() => {
+      scr.current?.scrollTo({ y: 1000 });
+      console.log("scrollRef", scr.current);
+    }, 1000);
+  }, []);
 
-- **indicatorBorder** *(number)*: Set the border of the scroll indicator.
-
-### Example
-
-```javascript
-import { ScrollView, FlatList, ScrollViewProps, FlatListProps } from 'react-native-scroll-indicator-always';
-
-const MyScrollViewComponent: React.FC<ScrollViewProps> = (props) => {
   return (
-    <ScrollView
-      showAlways={true}
-      indicatorColor="#3498db"
-      indicatorWidth={5}
-      indicatorBorder={2}
-      {...props}
-    >
-      {/* Your scrollable content here */}
+    <ScrollView ref={scr}>
+      <View style={styles.container}>
+        <Text>Your App Content Goes Here</Text>
+        {/* Add your components */}
+      </View>
     </ScrollView>
   );
-};
+}
 
-const MyFlatListComponent: React.FC<FlatListProps<MyItem>> = (props) => {
-  return (
-    <FlatList
-      showAlways={true}
-      indicatorColor="#3498db"
-      indicatorWidth={5}
-      indicatorBorder={2}
-      {...props}
-    />
-  );
-};
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+});
 ```
 
-## Contributing
+### FlatList Example
 
-If you want to contribute to the project, follow these steps:
+```jsx
+import * as React from 'react';
+import {
+  StyleSheet,
+  View,
+  Text,
+  FlatList as NativeFlatlist,
+} from 'react-native';
+import { FlatList } from 'react-native-scroll-indicator-always';
 
-1. Fork the project.
-2. Create your feature branch (`git checkout -b feature/your-feature`).
-3. Commit your changes (`git commit -am 'Add some feature'`).
-4. Push to the branch (`git push origin feature/your-feature`).
-5. Open a pull request.
+export default function App() {
+  const scr = React.useRef<NativeFlatlist<any>>(null);
+
+  React.useEffect(() => {
+    setTimeout(() => {
+      scr.current?.scrollToOffset({ offset: 1000 });
+      console.log("flatListRef", scr.current);
+    }, 1000);
+  }, []);
+
+  return (
+    <View style={{ flex: 1 }}>
+      <FlatList
+        ref={scr}
+        data={["green", "red", "blue", "yellow"]}
+        renderItem={({ item }) => (
+          <View style={{ width: '100%', height: 400, backgroundColor: item }} />
+        )}
+      />
+    </View>
+  );
+}
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+});
+```
+
+## Props
+
+The `ScrollView` and `FlatList` components accept the same props as their React Native counterparts, along with the following additional props:
+
+- `showAlways`: *(boolean)* - Set to `true` to always show the scroll indicator. Default is `true`.
+- `indicatorColor`: *(string)* - Color of the scroll indicator. Default is `'#303030'`.
+- `indicatorWidth`: *(number)* - Width of the scroll indicator. Default is `4`.
+- `indicatorborder`: *(number)* - Border radius of the scroll indicator. Default is `20`.
 
 ## License
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details.
 
 ---
 
-Feel free to modify the README further based on your specific implementation details or to include any additional information you deem necessary.
+Feel free to customize this README further based on the specifics of your package. Add any additional details, installation instructions, or usage examples that would help users understand and integrate your library.
