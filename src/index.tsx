@@ -1,6 +1,7 @@
 import { NativeModules, Platform } from 'react-native';
 import ScrollView,{type ScrollViewProps} from './components/ScrollView';
 import FlatList, {type FlatListProps} from './components/FlatList';
+import KeyboardAwareScrollView, {type KeyboardAwareScrollViewProps} from './components/KeyboardAwareScrollView';
 
 const LINKING_ERROR =
   `The package 'react-native-scroll-indicator-always' doesn't seem to be linked. Make sure: \n\n` +
@@ -23,4 +24,4 @@ export function multiply(a: number, b: number): Promise<number> {
   return ScrollIndicatorAlways.multiply(a, b);
 }
 
-export { ScrollView, FlatList, type ScrollViewProps, type FlatListProps };
+export { ScrollView, FlatList, type ScrollViewProps, type FlatListProps, KeyboardAwareScrollView, type KeyboardAwareScrollViewProps};

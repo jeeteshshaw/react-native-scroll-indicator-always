@@ -28,7 +28,7 @@ export interface FlatListProps<ItemT> extends FlatlistPropsNativeScroll<ItemT> {
   indicatorWidth?: number;
   indicatorborder?: number;
   ref?: React.RefObject<FlatlistNativeScroll<any>>;
-  onScroll: (event: NativeSyntheticEvent<NativeScrollEvent>) => void
+  onScroll?: (event: NativeSyntheticEvent<NativeScrollEvent>) => void
   
 }
 // @ts-ignore

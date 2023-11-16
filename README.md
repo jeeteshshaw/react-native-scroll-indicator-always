@@ -1,16 +1,13 @@
-Certainly! Below is an updated README for your React Native Scroll Indicator Always package that includes information about the `FlatList` component:
+Certainly! Here's the README with the requested modification:
 
----
-
-# react-native-scroll-indicator-always
+```markdown
+# React Native Scroll Indicator Always
 
 [![npm version](https://badge.fury.io/js/react-native-scroll-indicator-always.svg)](https://badge.fury.io/js/react-native-scroll-indicator-always)
 
-A React Native library providing a `ScrollView` and `FlatList` with an always-visible scroll indicator.
+A React Native package that provides an always visible scroll indicator for ScrollView and FlatList components, built on top of [react-native-keyboard-aware-scroll-view](https://github.com/APSL/react-native-keyboard-aware-scroll-view).
 
 ## Installation
-
-Install the package using your preferred package manager:
 
 ```bash
 npm install react-native-scroll-indicator-always
@@ -24,41 +21,77 @@ yarn add react-native-scroll-indicator-always
 
 ## Usage
 
-Import the components from `react-native-scroll-indicator-always`:
-
-```jsx
-import { ScrollView, FlatList } from 'react-native-scroll-indicator-always';
-```
-
-Use `ScrollView` or `FlatList` as you would use the standard React Native components. The scroll indicator will always be visible.
-
-### ScrollView Example
+### Example 1: Using KeyboardAwareScrollView with ScrollView and FlatList
 
 ```jsx
 import * as React from 'react';
+import { StyleSheet, View, Text } from 'react-native';
 import {
-  StyleSheet,
-  View,
-  Text,
-  ScrollView as NativeScroll,
-} from 'react-native';
-import { ScrollView } from 'react-native-scroll-indicator-always';
+  FlatList,
+  ScrollView,
+  KeyboardAwareScrollView,
+  KeyboardAwareScrollViewProps,
+} from 'react-native-scroll-indicator-always';
+import { KeyboardAwareScrollView as KeyboardAwareScrollViewRef } from 'react-native-keyboard-aware-scroll-view';
 
 export default function App() {
-  const scr = React.useRef<NativeScroll>(null);
+  const scr = React.useRef<KeyboardAwareScrollViewRef>(null);
+  const [result, setResult] = React.useState<number | undefined>();
 
   React.useEffect(() => {
     setTimeout(() => {
-      scr.current?.scrollTo({ y: 1000 });
-      console.log("scrollRef", scr.current);
+      console.log("scr1", scr.current);
     }, 1000);
   }, []);
 
   return (
-    <ScrollView ref={scr}>
+    <KeyboardAwareScrollView ref={scr} scrollEventThrottle={60}>
       <View style={styles.container}>
-        <Text>Your App Content Goes Here</Text>
-        {/* Add your components */}
+        <Text>Result: {result}</Text>
+        <View
+          style={{ width: '100%', height: 400, backgroundColor: 'tomato' }}
+        />
+        <View style={{ width: '100%', height: 400, backgroundColor: 'blue' }} />
+        <View
+          style={{ width: '100%', height: 400, backgroundColor: 'green' }}
+        />
+        <View
+          style={{ width: '100%', height: 400, backgroundColor: 'yellow' }}
+        />
+      </View>
+    </KeyboardAwareScrollView>
+  );
+}
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  box: {
+    width: 60,
+    height: 60,
+    marginVertical: 20,
+  },
+});
+```
+
+### Example 2: Using Only ScrollView
+
+```jsx
+import * as React from 'react';
+import { StyleSheet, View, Text } from 'react-native';
+import { ScrollView, KeyboardAwareScrollViewProps } from 'react-native-scroll-indicator-always';
+
+export default function App() {
+  const scr = React.useRef<KeyboardAwareScrollViewProps>(null);
+
+  return (
+    <ScrollView ref={scr} scrollEventThrottle={60}>
+      <View style={styles.container}>
+        <Text>This is a sample ScrollView with an always visible scroll indicator.</Text>
+        {/* Your ScrollView content here */}
       </View>
     </ScrollView>
   );
@@ -73,63 +106,37 @@ const styles = StyleSheet.create({
 });
 ```
 
-### FlatList Example
+### Example 3: Using Only FlatList
 
 ```jsx
 import * as React from 'react';
-import {
-  StyleSheet,
-  View,
-  Text,
-  FlatList as NativeFlatlist,
-} from 'react-native';
-import { FlatList } from 'react-native-scroll-indicator-always';
+import { StyleSheet, View, Text } from 'react-native';
+import { FlatList, KeyboardAwareScrollViewProps } from 'react-native-scroll-indicator-always';
 
 export default function App() {
-  const scr = React.useRef<NativeFlatlist<any>>(null);
+  const scr = React.useRef<KeyboardAwareScrollViewProps>(null);
 
-  React.useEffect(() => {
-    setTimeout(() => {
-      scr.current?.scrollToOffset({ offset: 1000 });
-      console.log("flatListRef", scr.current);
-    }, 1000);
-  }, []);
+  const data = ["Item 1", "Item 2", "Item 3", "Item 4", "Item 5"];
 
   return (
-    <View style={{ flex: 1 }}>
-      <FlatList
-        ref={scr}
-        data={["green", "red", "blue", "yellow"]}
-        renderItem={({ item }) => (
-          <View style={{ width: '100%', height: 400, backgroundColor: item }} />
-        )}
-      />
-    </View>
+    <FlatList
+      ref={scr}
+      data={data}
+      keyExtractor={(item) => item}
+      renderItem={({ item }) => (
+        <View style={styles.item}>
+          <Text>{item}</Text>
+        </View>
+      )}
+    />
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
+  item: {
+    padding: 16,
+    borderBottomWidth: 1,
+    borderBottomColor: '#ccc',
   },
 });
 ```
-
-## Props
-
-The `ScrollView` and `FlatList` components accept the same props as their React Native counterparts, along with the following additional props:
-
-- `showAlways`: *(boolean)* - Set to `true` to always show the scroll indicator. Default is `true`.
-- `indicatorColor`: *(string)* - Color of the scroll indicator. Default is `'#303030'`.
-- `indicatorWidth`: *(number)* - Width of the scroll indicator. Default is `4`.
-- `indicatorborder`: *(number)* - Border radius of the scroll indicator. Default is `20`.
-
-## License
-
-This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details.
-
----
-
-Feel free to customize this README further based on the specifics of your package. Add any additional details, installation instructions, or usage examples that would help users understand and integrate your library.

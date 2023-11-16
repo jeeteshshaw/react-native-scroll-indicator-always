@@ -27,7 +27,7 @@ export interface ScrollViewProps extends NativeScrollProps {
   indicatorWidth?: number;
   indicatorborder?: number;
   ref?:  React.RefObject<NativeScroll>
-  onScroll: (event: NativeSyntheticEvent<NativeScrollEvent>) => void
+  onScroll?: (event: NativeSyntheticEvent<NativeScrollEvent>) => void
 }
 // @ts-ignore
 const ScrollView: FC<ScrollViewProps> = React.forwardRef((props,ref) => {

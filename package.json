@@ -1,6 +1,6 @@
 {
   "name": "react-native-scroll-indicator-always",
-  "version": "0.1.3",
+  "version": "0.1.4",
   "description": "scroll indicator show",
   "main": "lib/commonjs/index",
   "module": "lib/module/index",
@@ -158,5 +158,8 @@
         }
       ]
     ]
+  },
+  "dependencies": {
+    "react-native-keyboard-aware-scroll-view": "^0.9.5"
   }
 }
