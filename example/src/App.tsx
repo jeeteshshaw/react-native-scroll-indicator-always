@@ -6,13 +6,14 @@ import {KeyboardAwareScrollView as KeyboardAwareScrollViewRef}  from "react-nati
 
 
 export default function App() {
+  const [result, setResult] = React.useState<number>(0)
   const scr = React.useRef<KeyboardAwareScrollViewRef>(null)
   React.useEffect(() => {
     // multiply(3, 7).then(setResult);
     setTimeout(() => {
       
       // scr.current?.scrollToOffset({ offset: 1000 });
-      console.log("scr1",scr.current)
+      // console.log("scr1",scr.current)
     }, 1000);
   }, []);
 
@@ -27,7 +28,7 @@ export default function App() {
   // )
 
   return (
-    <KeyboardAwareScrollView ref={scr} scrollEventThrottle={60}>
+    <KeyboardAwareScrollView ref={scr} scrollEventThrottle={60} decelerationRate={"fast"}>
       <View style={styles.container}>
         <Text>Result: {result}</Text>
         <View

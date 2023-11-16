@@ -9,7 +9,8 @@ import {
   Animated,
   type NativeScrollVelocity,
   type ViewStyle,
-  type LayoutChangeEvent
+  type LayoutChangeEvent,
+  Platform
 } from 'react-native';
 import React, {
   useCallback,
@@ -42,7 +43,8 @@ const ScrollView: FC<ScrollViewProps> = React.forwardRef((props,ref) => {
         toValue: ScrolledContainerSize * (val / ch),
         useNativeDriver: true,
         bounciness: 8,
-        velocity,
+        velocity:Platform.OS ==="ios"&& velocity || undefined,
+        
         delay: 0,
       }).start();
     },
