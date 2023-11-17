@@ -41,7 +41,7 @@ import {
     const [ScrolledContainerSize, setScrolledContainerSize] = useState<number>(height);
   
     const animation = useCallback(
-      (val: number, velocity: NativeScrollVelocity, ch) => {
+      (val: number, velocity: NativeScrollVelocity | undefined, ch) => {
         Animated.spring(scrolAnimation, {
           toValue: ScrolledContainerSize * (val / ch),
           useNativeDriver: true,
