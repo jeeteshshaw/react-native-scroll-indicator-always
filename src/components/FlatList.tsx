@@ -66,7 +66,7 @@ const FlatList: FC<FlatListProps<any>> = React.forwardRef((props,ref) => {
   );
   const _ContentHeight = useCallback(
     (event: LayoutChangeEvent) => {
-      setScrolledContainerSize(event.nativeEvent.layout.height);
+      setScrolledContainerSize(event.nativeEvent.layout.y);
       props.onLayout &&props?.onLayout(event);
     },
     []

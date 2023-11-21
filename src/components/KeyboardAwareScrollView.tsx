@@ -68,7 +68,7 @@ import {
     );
     const _ContentHeight = useCallback(
       (event: LayoutChangeEvent) => {
-        setScrolledContainerSize(event.nativeEvent.layout.height);
+        setScrolledContainerSize(event.nativeEvent.layout.y);
         props.onLayout &&props?.onLayout(event);
       },
       []
