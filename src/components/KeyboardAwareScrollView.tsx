@@ -8,7 +8,8 @@ import {
     type NativeScrollVelocity,
     type ViewStyle,
     type LayoutChangeEvent,
-    Platform
+    Platform,
+    Easing
   } from 'react-native';
   import React, {
     useCallback,
@@ -42,12 +43,19 @@ import {
   
     const animation = useCallback(
       (val: number, velocity: NativeScrollVelocity | undefined, ch) => {
-        Animated.spring(scrolAnimation, {
-          toValue: ScrolledContainerSize * (val / ch),
+        // Animated.spring(scrolAnimation, {
+        //   toValue: ScrolledContainerSize * (val / ch),
+        //   useNativeDriver: true,
+        //   bounciness: 8,
+        //   velocity:Platform.OS ==="ios"&& velocity || undefined,
+        //   delay: 0,
+        // }).start();
+        Animated.timing(scrolAnimation,{
+          toValue:ScrolledContainerSize * (val / ch),
           useNativeDriver: true,
-          bounciness: 8,
-          velocity:Platform.OS ==="ios"&& velocity || undefined,
-          delay: 0,
+          duration:0,
+          delay:0,
+          easing:Easing.ease
         }).start();
       },
       [scrolAnimation]
@@ -68,7 +76,7 @@ import {
     );
     const _ContentHeight = useCallback(
       (event: LayoutChangeEvent) => {
-        setScrolledContainerSize(event.nativeEvent.layout.y);
+        setScrolledContainerSize(event.nativeEvent.layout.height);
         props.onLayout &&props?.onLayout(event);
       },
       []

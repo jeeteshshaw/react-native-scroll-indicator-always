@@ -1,6 +1,5 @@
 import {
   Dimensions,
-  ScrollView as NativeScroll,
   type ScrollViewProps as NativeScrollProps,
   type NativeScrollEvent,
   type NativeSyntheticEvent,
@@ -21,6 +20,9 @@ import React, {
   useEffect,
 } from 'react';
 
+// @ts-ignore
+import { ScrollView } from "react-native-gesture-handler";
+
 const { height } = Dimensions.get('window');
 
 export interface ScrollViewProps extends NativeScrollProps {
@@ -28,12 +30,12 @@ export interface ScrollViewProps extends NativeScrollProps {
   indicatorColor?: string;
   indicatorWidth?: number;
   indicatorborder?: number;
-  ref?:  React.RefObject<NativeScroll>
+  ref?:  React.RefObject<ScrollView>
   onScroll?: (event: NativeSyntheticEvent<NativeScrollEvent>) => void
 }
 // @ts-ignore
-const ScrollView: FC<ScrollViewProps> = React.forwardRef((props,ref) => {
-  const scroll = useRef<NativeScroll>(null);
+const GestureScrollView: FC<ScrollViewProps> = React.forwardRef((props,ref) => {
+  const scroll = useRef<ScrollView>(null);
   const scrolAnimation = useRef<Animated.Value>(new Animated.Value(1)).current;
   const [ScrolledSize, setScrolledSize] = useState<number>(1);
   const [ScrolledContainerSize, setScrolledContainerSize] = useState<number>(height);
@@ -93,8 +95,9 @@ const ScrollView: FC<ScrollViewProps> = React.forwardRef((props,ref) => {
 
   const indicator = ScrolledContainerSize / (ScrolledSize / ScrolledContainerSize);
   return (
-    <View style={styles.container}>
-      <NativeScroll
+    <View>
+
+      <ScrollView
         scrollEventThrottle={70}
         showsVerticalScrollIndicator={false}
         {...props}
@@ -105,7 +108,7 @@ const ScrollView: FC<ScrollViewProps> = React.forwardRef((props,ref) => {
       
       >
         {props.children}
-      </NativeScroll>
+      </ScrollView>
       <Animated.View
         style={styles.indicatorView(
           indicator,
@@ -116,12 +119,13 @@ const ScrollView: FC<ScrollViewProps> = React.forwardRef((props,ref) => {
         )}
       />
     </View>
+
   );
 });
 
-export default ScrollView;
+export default GestureScrollView;
 
-ScrollView.defaultProps = {
+GestureScrollView.defaultProps = {
   indicatorborder: 20,
   indicatorColor: '#303030',
   indicatorWidth: 4,

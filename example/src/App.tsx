@@ -1,8 +1,9 @@
 import * as React from 'react';
 
 import { StyleSheet, View, Text, FlatList as NativeFlatlist } from 'react-native';
-import { FlatList, ScrollView, KeyboardAwareScrollView, type KeyboardAwareScrollViewProps,} from 'react-native-scroll-indicator-always';
-import {KeyboardAwareScrollView as KeyboardAwareScrollViewRef}  from "react-native-keyboard-aware-scroll-view"
+import { ScrollView, GestureScrollView} from 'react-native-scroll-indicator-always';
+import {KeyboardAwareScrollView as KeyboardAwareScrollViewRef, }  from "react-native-keyboard-aware-scroll-view"
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
 
 
 export default function App() {
@@ -26,11 +27,30 @@ export default function App() {
 
   //   </View>
   // )
+  // return (
+  //   <GestureHandlerRootView>
 
+  //     <GestureScrollView scrollEventThrottle={30}>
+  //     <View style={styles.container}>
+  //       {/* <Text>Result: {result}</Text> */}
+  //       <View
+  //         style={{ width: '100%', height: 400, backgroundColor: 'tomato' }}
+  //       />
+  //       <View style={{ width: '100%', height: 400, backgroundColor: 'blue' }} />
+  //       <View
+  //         style={{ width: '100%', height: 400, backgroundColor: 'green' }}
+  //       />
+  //       <View
+  //         style={{ width: '100%', height: 400, backgroundColor: 'yellow' }}
+  //       />
+  //     </View>
+  //     </GestureScrollView>
+  //   </GestureHandlerRootView>
+  // )
   return (
-    <KeyboardAwareScrollView ref={scr} scrollEventThrottle={60} decelerationRate={"fast"}>
+    <ScrollView ref={scr} scrollEventThrottle={60} decelerationRate={"fast"}>
       <View style={styles.container}>
-        <Text>Result: {result}</Text>
+        {/* <Text>Result: {result}</Text> */}
         <View
           style={{ width: '100%', height: 400, backgroundColor: 'tomato' }}
         />
@@ -42,7 +62,7 @@ export default function App() {
           style={{ width: '100%', height: 400, backgroundColor: 'yellow' }}
         />
       </View>
-    </KeyboardAwareScrollView>
+    </ScrollView>
   );
 }
 

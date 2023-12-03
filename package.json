@@ -1,6 +1,6 @@
 {
   "name": "react-native-scroll-indicator-always",
-  "version": "0.2.5",
+  "version": "0.3.0",
   "description": "scroll indicator show always",
   "main": "lib/commonjs/index",
   "module": "lib/module/index",
@@ -37,7 +37,9 @@
   "keywords": [
     "react-native",
     "ios",
-    "android"
+    "android",
+    "react-native-gesture-handler",
+    "react-native-scroll-indicator-always"
   ],
   "repository": "https://github.com/jeeteshshaw/react-native-scroll-indicator-always",
   "author": "jeetesh <jeeteshshaw@gmail.com> (https://github.com/jeeteshshaw)",
@@ -77,7 +79,8 @@
   },
   "peerDependencies": {
     "react": "*",
-    "react-native": "*"
+    "react-native": "*",
+    "react-native-gesture-handler": "*"
   },
   "workspaces": [
     "example"
@@ -160,6 +163,7 @@
     ]
   },
   "dependencies": {
-    "react-native-keyboard-aware-scroll-view": "^0.9.5"
+    "react-native-keyboard-aware-scroll-view": "^0.9.5",
+    "react-native-safe-area-context": "^4.7.4"
   }
 }
