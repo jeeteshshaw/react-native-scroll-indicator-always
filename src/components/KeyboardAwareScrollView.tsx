@@ -5,10 +5,8 @@ import {
     StyleSheet,
     View,
     Animated,
-    type NativeScrollVelocity,
     type ViewStyle,
     type LayoutChangeEvent,
-    Platform,
     Easing
   } from 'react-native';
   import React, {
@@ -42,7 +40,7 @@ import {
     const [ScrolledContainerSize, setScrolledContainerSize] = useState<number>(height);
   
     const animation = useCallback(
-      (val: number, velocity: NativeScrollVelocity | undefined, ch) => {
+      (val: number,  ch) => {
         // Animated.spring(scrolAnimation, {
         //   toValue: ScrolledContainerSize * (val / ch),
         //   useNativeDriver: true,
@@ -66,7 +64,6 @@ import {
         setScrolledSize(event.nativeEvent.contentSize.height);
         animation(
           event.nativeEvent.contentOffset.y,
-          event.nativeEvent.velocity,
           event.nativeEvent.contentSize.height
         );
         props.onScroll && props?.onScroll(event);
