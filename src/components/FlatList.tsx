@@ -27,6 +27,7 @@ export interface FlatListProps<ItemT> extends FlatlistPropsNativeScroll<ItemT> {
   showAlways?: boolean;
   indicatorColor?: string;
   indicatorWidth?: number;
+  flexDisabled?: boolean;
   indicatorborder?: number;
   parentViewProps?: ViewProps;
   ref?: React.RefObject<FlatlistNativeScroll<any>>;
@@ -103,7 +104,7 @@ const FlatList: FC<FlatListProps<any>> = React.forwardRef((props,ref) => {
 
   const indicator = ScrolledContainerSize / (ScrolledSize / ScrolledContainerSize);
   return (
-    <View {...props.parentViewProps ||{}} style={[styles.container, props.parentViewProps?.style || {}]}>
+    <View {...props.parentViewProps ||{}} style={[styles.container, !props.flexDisabled && styles.flexEnabled || {}, props.parentViewProps?.style || {}]}>
       <FlatlistNativeScroll
         {...props}
         ref={ref || scroll}
@@ -170,4 +171,7 @@ const styles = StyleSheet.create<Styles | any>({
     position: 'relative',
     width: '100%',
   },
+  flexEnabled: {
+    flex:1
+  }
 });

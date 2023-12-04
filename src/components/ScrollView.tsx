@@ -26,6 +26,7 @@ export interface ScrollViewProps extends NativeScrollProps {
   showAlways?: boolean;
   indicatorColor?: string;
   parentViewProps?: ViewProps;
+  flexDisabled?: boolean;
   indicatorWidth?: number;
   indicatorborder?: number;
   ref?:  React.RefObject<NativeScroll>
@@ -92,7 +93,7 @@ const ScrollView: FC<ScrollViewProps> = React.forwardRef((props,ref) => {
 
   const indicator = ScrolledContainerSize / (ScrolledSize / ScrolledContainerSize);
   return (
-    <View {...props.parentViewProps ||{}} style={[styles.container, props.parentViewProps?.style || {}]}>
+    <View {...props.parentViewProps ||{}} style={[styles.container, !props.flexDisabled && styles.flexEnabled ||{}, props.parentViewProps?.style || {}]}>
       <NativeScroll
         scrollEventThrottle={70}
         showsVerticalScrollIndicator={false}
@@ -160,4 +161,7 @@ const styles = StyleSheet.create<Styles | any>({
     position: 'relative',
     width: '100%',
   },
+  flexEnabled: {
+    flex:1
+  }
 });

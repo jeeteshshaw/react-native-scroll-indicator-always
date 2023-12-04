@@ -29,6 +29,7 @@ import type { ViewProps } from 'react-native';
     showAlways?: boolean;
     indicatorColor?: string;
     parentViewProps?: ViewProps;
+    flexDisabled?: boolean;
     indicatorWidth?: number;
     indicatorborder?: number;
     ref?:  React.RefObject<KeyboardNativeScroll>
@@ -94,7 +95,7 @@ import type { ViewProps } from 'react-native';
   
     const indicator = ScrolledContainerSize / (ScrolledSize / ScrolledContainerSize);
     return (
-      <View {...props.parentViewProps ||{}} style={[styles.container, props.parentViewProps?.style || {}]}>
+      <View {...props.parentViewProps ||{}} style={[styles.container, !props.flexDisabled && styles.flexEnabled ||{}, props.parentViewProps?.style || {}]}>
         <KeyboardNativeScroll
           scrollEventThrottle={70}
           showsVerticalScrollIndicator={false}
@@ -162,5 +163,8 @@ import type { ViewProps } from 'react-native';
       position: 'relative',
       width: '100%',
     },
+    flexEnabled: {
+      flex:1
+    }
   });
   
