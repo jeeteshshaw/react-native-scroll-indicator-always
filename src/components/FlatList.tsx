@@ -19,6 +19,7 @@ import React, {
   useEffect,
   useLayoutEffect,
 } from 'react';
+import type { ViewProps } from 'react-native';
 
 const { height } = Dimensions.get('window');
 
@@ -27,6 +28,7 @@ export interface FlatListProps<ItemT> extends FlatlistPropsNativeScroll<ItemT> {
   indicatorColor?: string;
   indicatorWidth?: number;
   indicatorborder?: number;
+  parentViewProps?: ViewProps;
   ref?: React.RefObject<FlatlistNativeScroll<any>>;
   onScroll?: (event: NativeSyntheticEvent<NativeScrollEvent>) => void
   
@@ -55,7 +57,7 @@ const FlatList: FC<FlatListProps<any>> = React.forwardRef((props,ref) => {
         easing:Easing.ease
       }).start();
     },
-    [scrolAnimation]
+    [scrolAnimation, ScrolledContainerSize]
   );
 
   const _Scrolled = useCallback(
@@ -67,14 +69,14 @@ const FlatList: FC<FlatListProps<any>> = React.forwardRef((props,ref) => {
       );
       props.onScroll &&props?.onScroll(event);
     },
-    [animation]
+    [animation, ScrolledSize]
   );
   const _ContentHeight = useCallback(
     (event: LayoutChangeEvent) => {
       setScrolledContainerSize(event.nativeEvent.layout.height);
       props.onLayout &&props?.onLayout(event);
     },
-    []
+    [ScrolledContainerSize]
   );
 
   useEffect(() => {
@@ -101,7 +103,7 @@ const FlatList: FC<FlatListProps<any>> = React.forwardRef((props,ref) => {
 
   const indicator = ScrolledContainerSize / (ScrolledSize / ScrolledContainerSize);
   return (
-    <View style={styles.container}>
+    <View {...props.parentViewProps ||{}} style={[styles.container, props.parentViewProps?.style || {}]}>
       <FlatlistNativeScroll
         {...props}
         ref={ref || scroll}
@@ -165,7 +167,6 @@ const styles = StyleSheet.create<Styles | any>({
     transform: [{ translateY: scrolAnimation }],
   }),
   container: {
-    flex: 1,
     position: 'relative',
     width: '100%',
   },

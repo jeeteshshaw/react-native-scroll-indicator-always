@@ -20,12 +20,14 @@ import React, {
 
 // @ts-ignore
 import { ScrollView } from "react-native-gesture-handler";
+import type { ViewProps } from 'react-native';
 
 const { height } = Dimensions.get('window');
 
 export interface ScrollViewProps extends NativeScrollProps {
   showAlways?: boolean;
   indicatorColor?: string;
+  parentViewProps?: ViewProps;
   indicatorWidth?: number;
   indicatorborder?: number;
   ref?:  React.RefObject<ScrollView>
@@ -56,7 +58,7 @@ const GestureScrollView: FC<ScrollViewProps> = React.forwardRef((props,ref) => {
         easing:Easing.ease
       }).start();
     },
-    [scrolAnimation]
+    [scrolAnimation,ScrolledContainerSize]
   );
 
   const _Scrolled = useCallback(
@@ -69,14 +71,14 @@ const GestureScrollView: FC<ScrollViewProps> = React.forwardRef((props,ref) => {
       props.onScroll && props?.onScroll(event);
 
     },
-    [animation]
+    [animation, ScrolledSize]
   );
   const _ContentHeight = useCallback(
     (event: LayoutChangeEvent) => {
       setScrolledContainerSize(event.nativeEvent.layout.height);
       props.onLayout &&props?.onLayout(event);
     },
-    []
+    [ScrolledContainerSize]
   );
 
   useEffect(() => {
@@ -92,7 +94,7 @@ const GestureScrollView: FC<ScrollViewProps> = React.forwardRef((props,ref) => {
 
   const indicator = ScrolledContainerSize / (ScrolledSize / ScrolledContainerSize);
   return (
-    <View>
+    <View {...props.parentViewProps ||{}} style={[styles.container, props.parentViewProps?.style || {}]}>
 
       <ScrollView
         scrollEventThrottle={70}
@@ -159,7 +161,6 @@ const styles = StyleSheet.create<Styles | any>({
     transform: [{ translateY: scrolAnimation }],
   }),
   container: {
-    flex: 1,
     position: 'relative',
     width: '100%',
   },

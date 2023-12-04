@@ -19,6 +19,7 @@ import {
 
 
   import {KeyboardAwareScrollView as KeyboardNativeScroll, type KeyboardAwareScrollViewProps as KeyboardNativeScrollProps } from "react-native-keyboard-aware-scroll-view"
+import type { ViewProps } from 'react-native';
   
   
   
@@ -27,6 +28,7 @@ import {
   export interface KeyboardAwareScrollViewProps extends KeyboardNativeScrollProps {
     showAlways?: boolean;
     indicatorColor?: string;
+    parentViewProps?: ViewProps;
     indicatorWidth?: number;
     indicatorborder?: number;
     ref?:  React.RefObject<KeyboardNativeScroll>
@@ -56,7 +58,7 @@ import {
           easing:Easing.ease
         }).start();
       },
-      [scrolAnimation]
+      [scrolAnimation, ScrolledContainerSize]
     );
   
     const _Scrolled = useCallback(
@@ -69,14 +71,14 @@ import {
         props.onScroll && props?.onScroll(event);
   
       },
-      [animation]
+      [animation, ScrolledSize]
     );
     const _ContentHeight = useCallback(
       (event: LayoutChangeEvent) => {
         setScrolledContainerSize(event.nativeEvent.layout.height);
         props.onLayout &&props?.onLayout(event);
       },
-      []
+      [ScrolledContainerSize]
     );
   
     useEffect(() => {
@@ -92,7 +94,7 @@ import {
   
     const indicator = ScrolledContainerSize / (ScrolledSize / ScrolledContainerSize);
     return (
-      <View style={styles.container}>
+      <View {...props.parentViewProps ||{}} style={[styles.container, props.parentViewProps?.style || {}]}>
         <KeyboardNativeScroll
           scrollEventThrottle={70}
           showsVerticalScrollIndicator={false}
@@ -157,7 +159,6 @@ import {
       transform: [{ translateY: scrolAnimation }],
     }),
     container: {
-      flex: 1,
       position: 'relative',
       width: '100%',
     },
