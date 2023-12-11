@@ -109,7 +109,7 @@ const GestureScrollView: FC<ScrollViewProps> = React.forwardRef((props,ref) => {
       >
         {props.children}
       </ScrollView>
-      <Animated.View
+      {props.showAlways && <Animated.View
         style={styles.indicatorView(
           indicator,
           scrolAnimation,
@@ -117,7 +117,7 @@ const GestureScrollView: FC<ScrollViewProps> = React.forwardRef((props,ref) => {
           props.indicatorWidth,
           props.indicatorborder
         )}
-      />
+      />}
     </View>
 
   );

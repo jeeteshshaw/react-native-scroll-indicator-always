@@ -108,7 +108,7 @@ import type { ViewProps } from 'react-native';
         >
           {props.children}
         </KeyboardNativeScroll>
-        <Animated.View
+       {props.showAlways && <Animated.View
           style={styles.indicatorView(
             indicator,
             scrolAnimation,
@@ -116,7 +116,7 @@ import type { ViewProps } from 'react-native';
             props.indicatorWidth,
             props.indicatorborder
           )}
-        />
+        />}
       </View>
     );
   });

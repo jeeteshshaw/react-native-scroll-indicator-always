@@ -116,7 +116,7 @@ const FlatList: FC<FlatListProps<any>> = React.forwardRef((props,ref) => {
       >
         {props.children}
       </FlatlistNativeScroll>
-      <Animated.View
+      {props.showAlways && <Animated.View
         style={styles.indicatorView(
           indicator,
           scrolAnimation,
@@ -124,7 +124,7 @@ const FlatList: FC<FlatListProps<any>> = React.forwardRef((props,ref) => {
           props.indicatorWidth,
           props.indicatorborder
         )}
-      />
+      />}
     </View>
   );
 });

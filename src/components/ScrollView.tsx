@@ -106,7 +106,7 @@ const ScrollView: FC<ScrollViewProps> = React.forwardRef((props,ref) => {
       >
         {props.children}
       </NativeScroll>
-      <Animated.View
+      {props.showAlways && <Animated.View
         style={styles.indicatorView(
           indicator,
           scrolAnimation,
@@ -114,7 +114,7 @@ const ScrollView: FC<ScrollViewProps> = React.forwardRef((props,ref) => {
           props.indicatorWidth,
           props.indicatorborder
         )}
-      />
+      />}
     </View>
   );
 });
