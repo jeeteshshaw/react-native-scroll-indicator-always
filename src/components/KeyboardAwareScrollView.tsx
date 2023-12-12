@@ -108,7 +108,7 @@ import type { ViewProps } from 'react-native';
         >
           {props.children}
         </KeyboardNativeScroll>
-       {props.showAlways && <Animated.View
+       {(props.showAlways &&ScrolledContainerSize< ScrolledSize ) && <Animated.View
           style={styles.indicatorView(
             indicator,
             scrolAnimation,

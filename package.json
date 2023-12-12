@@ -1,6 +1,6 @@
 {
   "name": "react-native-scroll-indicator-always",
-  "version": "0.3.3",
+  "version": "0.3.4",
   "description": "scroll indicator show always",
   "main": "lib/commonjs/index",
   "module": "lib/module/index",

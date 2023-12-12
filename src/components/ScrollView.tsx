@@ -106,7 +106,7 @@ const ScrollView: FC<ScrollViewProps> = React.forwardRef((props,ref) => {
       >
         {props.children}
       </NativeScroll>
-      {props.showAlways && <Animated.View
+      {props.showAlways &&ScrolledContainerSize< ScrolledSize && <Animated.View
         style={styles.indicatorView(
           indicator,
           scrolAnimation,

@@ -116,7 +116,7 @@ const FlatList: FC<FlatListProps<any>> = React.forwardRef((props,ref) => {
       >
         {props.children}
       </FlatlistNativeScroll>
-      {props.showAlways && <Animated.View
+      {props.showAlways &&ScrolledContainerSize< ScrolledSize  && <Animated.View
         style={styles.indicatorView(
           indicator,
           scrolAnimation,
